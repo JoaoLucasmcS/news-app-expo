@@ -1,3 +1,6 @@
+import {get} from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import {TurboModule} from "react-native";
+
 export interface NewsData {
   id: number;
   title: string;

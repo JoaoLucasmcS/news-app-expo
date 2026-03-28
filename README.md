@@ -46,7 +46,7 @@ Para rodar o projeto localmente, certifique-se de possuir:
 ## 📂 Estrutura do Projeto
 
 - `App.tsx`: Ponto de entrada primário, que hospeda os estados da aplicação.
-- `News.tsx`: Componente focado apenas em renderizar os cartões individuais de cada notícia separadamente.
+- `NewsItems.tsx`: Componente focado apenas em renderizar os cartões individuais de cada notícia separadamente.
 - `services/api-handler.ts`: Módulo focado especificamente em realizar a chamada externa HTTP (Fetch) organizando os retornos e tipagens das notícias.
 
 ---

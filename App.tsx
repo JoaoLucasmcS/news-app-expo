@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, ActivityIndicator } from 'react-native';
-import News from './src/components/News';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  ActivityIndicator,
+  Image,
+  Button,
+  Touchable, TouchableOpacity, FlatList
+} from 'react-native';
+import News from './src/components/NewsItems';
 
-import { fetchNewsService, NewsData } from './src/utils/handle-api';
+import {fetchNewsService, NewsData} from './src/utils/handle-api';
+import NewsList from "./src/components/NewsList";
 
 export default function App() {
   const [newsList, setNewsList] = useState<NewsData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     fetchNews();
@@ -26,12 +37,17 @@ export default function App() {
     }
   };
 
+  let countNews = newsList.length
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
       
       <View style={styles.header}>
+        <Image source={require('./assets/newspaper-banner.png')} style={{width: 40, height: 40}} />
         <Text style={styles.headerTitle}>Últimas notícias</Text>
+        <Text style={styles.headerCountNews}>Quantidade de notícias: {countNews}</Text>
+        <TouchableOpacity style={styles.headerButtom} onPress={fetchNews}>Recarregar Notícias</TouchableOpacity>
       </View>
 
       {loading ? (
@@ -44,17 +60,7 @@ export default function App() {
           <Text style={styles.errorText}>Erro: {error}</Text>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          {newsList.map((item) => (
-            <News
-              key={item.id.toString()}
-              title={item.title}
-              image={item.image}
-              published={item.published}
-              link={item.link}
-            />
-          ))}
-        </ScrollView>
+          <NewsList newsList={newsList}></NewsList>
       )}
     </SafeAreaView>
   );
@@ -63,11 +69,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000000',
   },
   header: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
     alignItems: 'center',
@@ -76,6 +82,22 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 22,
     fontWeight: 'bold',
+    color: "#f0f0f0",
+  },
+  headerButtom: {
+    color: "#000000",
+    backgroundColor: "#f0f0f0",
+    padding: 6,
+    marginTop: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    fontSize: 12,
+  },
+  headerCountNews: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: "#f0f0f0",
   },
   centerContainer: {
     flex: 1,
